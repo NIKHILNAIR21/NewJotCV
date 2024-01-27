@@ -36,7 +36,7 @@ import "./App.css";
 import Contactus from "./screen/NewContactUs/Contactus";
 import QuestionList from "./VideoProfileComponent/QuestionList";
 import VideoPage from "./VideoProfileComponent/Videopage";
-
+import ResumeBuild from "./screen/ResumeForm/ResumeBuild";
 import PricingHome from "./screen/NewHome/sub-section/Pricing";
 import PrivacyPolicy from "./screen/NewHome/sub-section/PrivacyPolicy";
 import Template from "./screen/NewHome/sub-section/Template";
@@ -133,7 +133,7 @@ const Approuter = () => {
               <Route path="/social" element={<SocialLinkForm />} />
               <Route path="/temp" element={<ResumeLayout />} />
               <Route path="/video-profile" element={<QuestionList />} />
-        
+              <Route path="/resume-build" element={<ResumeBuild />} />
               <Route path="/email-template" element={<EmailTemplate />} />
               <Route path="/applied-jobs" element={<AppliedJobs />} />
               <Route path="*" element={<NotFound />} />

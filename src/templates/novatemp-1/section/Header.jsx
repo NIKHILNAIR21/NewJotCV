@@ -7,8 +7,13 @@ const Header = ({ img, fullname, profession, summary }) => {
         <img className="w-28 h-32  mt-4 rounded-md" src={img} alt="" />
         <div>
           <h1 className="font-semibold capitalize text-2xl">{fullname}</h1>
-          <h3 className="font-medium capitalize text-gray-400 text-lg">{profession}</h3>
-          <p className="font-medium text-base">{summary}</p> 
+          <h3 className="font-medium capitalize text-gray-400 text-lg">
+            {profession}
+          </h3>
+          <p
+            className="font-medium text-base"
+            dangerouslySetInnerHTML={{ __html: summary }}
+          ></p>
         </div>
       </header>
     </div>

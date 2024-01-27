@@ -4,6 +4,7 @@ import educationReducer from "./slice/educationSlice";
 import workExperienceReducer from "./slice/workExperienceSlice";
 import summaryReducer from "./slice/summarySlice";
 import skillReducer from "./slice/skillSlice";
+import SocialLinksSlice from "./slice/SocialLInksSlice";
 import userDetailReducer from "./slice/userDetail";
 // import { getDefaultMiddleware } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
@@ -16,7 +17,7 @@ import educationhistorySlice from "./slice/educationhistorySlice";
 import workHistorySlice from "./slice/workHistorySlice";
 import projectHistorySlice from "./slice/projectHistorySlice";
 import templateIDSlice from "./slice/templateIDSlice";
-import allProfileComplitionSlice from "./slice/allProfileComplitionSlice"
+import allProfileComplitionSlice from "./slice/allProfileComplitionSlice";
 import fullProfileSlice from "./slice/fullProfileSlice";
 import PickedSlice from "./slice/PickedSlice";
 import selectedProfileSlice from "./slice/selectedProfileSlice";
@@ -30,19 +31,20 @@ const rootReducer = combineReducers({
   summary: summaryReducer,
   // userDetails
   userDetail: userDetailReducer,
-  project:projectSlice,
-  eduHistory:educationhistorySlice,
-  workHistory:workHistorySlice,
-  projectHistory:projectHistorySlice,
-  templateID:templateIDSlice,
-  isComplete:allProfileComplitionSlice,
-  fullProfile:fullProfileSlice,
-// video question picked
-picked: PickedSlice,
-// selectedprofile
-selectedProfile:selectedProfileSlice,
-askExp:askExpSlice,
-portfolioSelction:portfolioProfile
+  project: projectSlice,
+  eduHistory: educationhistorySlice,
+  workHistory: workHistorySlice,
+  projectHistory: projectHistorySlice,
+  templateID: templateIDSlice,
+  isComplete: allProfileComplitionSlice,
+  fullProfile: fullProfileSlice,
+  socialLinks: SocialLinksSlice,
+  // video question picked
+  picked: PickedSlice,
+  // selectedprofile
+  selectedProfile: selectedProfileSlice,
+  askExp: askExpSlice,
+  portfolioSelction: portfolioProfile,
 });
 
 const persistConfig = {
@@ -53,10 +55,10 @@ const persistConfig = {
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 export const store = configureStore({
   reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-  getDefaultMiddleware({
-    serializableCheck: false,
-  }),
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
 
 export const persistor = persistStore(store);

@@ -7,7 +7,7 @@ import NoImg from "../../assets/NoImage.jpg";
 import {
   createCVProfile,
   getCVProfile,
-  updateCVProfile
+  updateCVProfile,
 } from "../../services/ApiServices";
 import { markProfileAsCompleted } from "../../slice/allProfileComplitionSlice";
 import {
@@ -204,7 +204,6 @@ const Personalinfo = () => {
                         <Field
                           type="text"
                           name="FullName"
-                          de
                           placeholder="John Doe"
                           value={values.FullName}
                           onChange={(e) => {
@@ -215,18 +214,6 @@ const Personalinfo = () => {
                           }}
                           className="w-[34.5rem]   sm:w-[40.5rem] md:w-[35.8rem]  rounded-l-md  outline-none  mb-3 p-[0.4rem]"
                         />
-                        {/* <span className=" rounded-r-md   w-fit ">
-                          <span className=" cursor-pointer ">
-                            <img
-                              src={idea}
-                              width={20}
-                              height={20}
-                              alt=""
-                              onMouseEnter={() => setShowSuggestions(true)}
-                              onMouseLeave={() => setShowSuggestions(false)}
-                            />
-                          </span>
-                        </span> */}
                       </div>
 
                       <ErrorMessage
@@ -235,15 +222,6 @@ const Personalinfo = () => {
                         className="error-message text-red-500"
                       />
                     </div>
-                    {/* {showSuggestions && (
-                      <div className="absolute mt-1 p-0.5 bg-white border right-3  -top-4 rounded shadow-md">
-                       
-
-                        <div className="text-sm hover:bg-gray-200 p-1 rounded">
-                          e.g "John Doe"
-                        </div>
-                      </div>
-                    )} */}
                   </div>
 
                   <div className="flex relative flex-col text-left ml-16 sm:ml-16 md:ml-0  mt-2 ">
@@ -262,18 +240,6 @@ const Personalinfo = () => {
                         }}
                         className="w-[34.5rem]  sm:w-[40.5rem] md:w-[35.8rem] rounded-md outline-none mb-3 p-[0.4rem]"
                       />
-                      {/* <span className=" rounded-r-md   w-fit ">
-                        <span className=" cursor-pointer ">
-                          <img
-                            src={idea}
-                            width={20}
-                            height={20}
-                            alt=""
-                            onMouseEnter={() => setshowprofession(true)}
-                            onMouseLeave={() => setshowprofession(false)}
-                          />
-                        </span>
-                      </span> */}
                     </div>
 
                     <ErrorMessage
@@ -281,21 +247,12 @@ const Personalinfo = () => {
                       component="div"
                       className="error-message text-red-500"
                     />
-                    {/* {showprofession && (
-                      <div className="absolute mt-1 p-0.5 bg-white border right-3 z-50  -top-4 rounded shadow-md">
-                       
-
-                        <div className="text-xs hover:bg-gray-200 p-1 rounded">
-                          e.g "Business Manager , Software engineer"
-                        </div>
-                      </div>
-                    )} */}
                   </div>
                   <div className="flex relative flex-col text-left ml-16 sm:ml-16 md:ml-0  mt-2 ">
                     <label htmlFor="country">Summary (min 200 words)</label>
                     <div className="flex">
                       <textarea
-                       minLength={200}
+                        minLength={200}
                         maxLength={400}
                         type="text"
                         name="summary"
@@ -309,28 +266,7 @@ const Personalinfo = () => {
                         }}
                         className="w-[34.5rem]  sm:w-[40.5rem] md:w-[35.8rem]  outline-none rounded-md mb-3 p-[0.4rem]"
                       />
-                      {/* <span className=" rounded-r-md   w-fit ">
-                        <span className=" cursor-pointer ">
-                          <img
-                            src={idea}
-                            width={20}
-                            height={20}
-                            alt=""
-                            onMouseEnter={() => setShowDescription(true)}
-                            onMouseLeave={() => setShowDescription(false)}
-                          />
-                        </span>
-                      </span> */}
                     </div>
-                    {/* {showDescription && (
-                      <div className="absolute mt-1 p-0.5 bg-white border right-3 z-50  -top-4 rounded shadow-md">
-                        
-
-                        <div className="text-xs hover:bg-gray-200 p-1 rounded">
-                          A good Summary should be between 200 to 400 words
-                        </div>
-                      </div>
-                    )} */}
                   </div>
 
                   <div className="flex pt-2 relative justify-normal ml-16 sm:ml-16 md:ml-0 md:justify-normal   text-left ">
@@ -350,18 +286,6 @@ const Personalinfo = () => {
                           }}
                           className="w-[34.5rem] sm:w-[40.5rem] md:w-[35.8rem]  outline-none rounded-md mb-3 p-[0.4rem]"
                         />
-                        {/* <span className=" rounded-r-md   w-fit ">
-                          <span className=" cursor-pointer ">
-                            <img
-                              src={idea}
-                              width={20}
-                              height={20}
-                              alt=""
-                              onMouseEnter={() => setShowCountry(true)}
-                              onMouseLeave={() => setShowCountry(false)}
-                            />
-                          </span>
-                        </span> */}
                       </div>
 
                       <ErrorMessage

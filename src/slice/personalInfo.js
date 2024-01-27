@@ -8,6 +8,7 @@ const initialState = {
   phoneNumber: "",
   email: "",
   photo: null,
+
 };
 
 const personalInfoSlice = createSlice({

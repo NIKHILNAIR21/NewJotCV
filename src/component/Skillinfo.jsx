@@ -25,7 +25,9 @@ const Skillinfo = () => {
         }}
         validationSchema={SkillSchema}
       >
+        {({ values, setFieldValue }) => (
         <Form>
+          <div className="overflow-y-auto p-4 rounded-b-2xl bg-white h-[26rem] no-scrollbar">
           <Field
             type="text"
             name="name"
@@ -79,7 +81,11 @@ const Skillinfo = () => {
               </div>
             </div>
           </div>
+          </div>
+        
         </Form>
+        )}
+
       </Formik>
     </div>
   );

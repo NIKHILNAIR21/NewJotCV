@@ -2,8 +2,17 @@ import React, { useState } from "react";
 import newJotcv from "../assets/newjotcv.png";
 import add from "../assets/add.png";
 import change from "../assets/change.png";
+import { useSelector } from "react-redux";
 const SideNav = () => {
   const [showModal, setShowModal] = useState(false);
+  const resumeData = useSelector(
+    (state) => state?.fullProfile?.resumeData?.data
+  );
+  const handleClick=()=>{
+    if(resumeData){
+      setShowModal(true)
+    }
+  }
   return (
     <>
       <div className="bg-blue-600 flex flex-col items-center my-3  gap-5  rounded-md">
@@ -11,7 +20,7 @@ const SideNav = () => {
           <img className=" mx-auto" src={newJotcv} alt="" />
         </div>
         <button
-          onClick={() => setShowModal(true)}
+          onClick={() => handleClick()}
           className="text-center p-3 m-3 flex flex-col items-center gap-3 rounded-md text-sm w-24 bg-white"
         >
           <div>

@@ -49,6 +49,7 @@ import EmailTemplate from "./screen/companylist/EmailTemplate";
 import ResumeLayout from "./templates/ResumeLayout";
 import DetailsPage from "./screen/companylist/DetailsPage";
 import AppliedJobs from "./screen/companylist/AppliedJobs";
+import UploadResume from "./screen/ResumeForm/UploadResume";
 
 const Approuter = () => {
   const location = useLocation();
@@ -136,6 +137,8 @@ const Approuter = () => {
               <Route path="/resume-build" element={<ResumeBuild />} />
               <Route path="/email-template" element={<EmailTemplate />} />
               <Route path="/applied-jobs" element={<AppliedJobs />} />
+              <Route path="/upload" element={<UploadResume />} />
+
               <Route path="*" element={<NotFound />} />
             </>
           ) : (

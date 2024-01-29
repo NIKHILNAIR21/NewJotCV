@@ -152,6 +152,7 @@ const SocialLinkForm = () => {
               </div>
             </div>
             <button
+            type="button"
               className="mt-4 w-fit bg-blue-500 text-white py-2 px-4 rounded-md text-center hover:bg-blue-600"
               onClick={addSocialLink}
             >

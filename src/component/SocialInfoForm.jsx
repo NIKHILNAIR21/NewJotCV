@@ -94,6 +94,7 @@ const SocialInfoForm = () => {
               />
             </div>
             <button
+            type="button"
               onClick={() => {
                 dispatch(deleteSocialLinks(item?.name));
                 handleDeleteLink(item?.name);
@@ -108,6 +109,7 @@ const SocialInfoForm = () => {
       <div className="flex gap-1 w-[27rem] flex-wrap">
         {links?.map((item) => (
           <button
+          type="button"
             onClick={() => handlechose(item)}
             className="p-2 bg-white  rounded-full"
           >

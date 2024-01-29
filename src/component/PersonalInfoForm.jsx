@@ -15,6 +15,7 @@ import {
   createSocialLinks,
 } from "../services/ApiServices.js";
 import SocialInfoForm from "./SocialInfoForm.jsx";
+import { getFull } from "../actions/allProfieAction.js";
 const PersonalInfoSchema = Yup.object().shape({
   FullName: Yup.string()
     .max(25, "Max 25 character or less")
@@ -61,6 +62,7 @@ const PersonalInfoForm = () => {
       } else {
         let response = await createCVProfile(formData);
         if (response?.status == 201) {
+
           let body = {
             profile: response?.data?.data?.id,
             total_links: socialLinks.length,
@@ -71,9 +73,10 @@ const PersonalInfoForm = () => {
           });
 
           try {
-            let response = await createSocialLinks(body);
-            if (response?.data?.status == 201) {
+            let Skilresponse = await createSocialLinks(body);
+            if (Skilresponse?.data?.status == 201) {
               dispatch(resetForm());
+              dispatch(getFull(response?.data?.data?.id))
             }
           } catch (error) {}
         }
@@ -137,7 +140,7 @@ const PersonalInfoForm = () => {
       >
         {({ values, setFieldValue }) => (
           <Form>
-            <div className="overflow-y-auto p-4 rounded-b-2xl bg-white h-[26rem] no-scrollbar">
+            <div className=" p-4 rounded-b-2xl bg-white h-[26rem] ">
               <div className="flex flex-col my-[12px]">
                 <label className="font-poppins text-[16px]">Full Name</label>
                 <Field

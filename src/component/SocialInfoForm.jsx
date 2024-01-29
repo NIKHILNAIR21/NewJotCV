@@ -1,9 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import website from "../assets/form-website.png";
+import linkedin from "../assets/form-linkedin.png";
+import github from "../assets/form-github.png";
+import behance from "../assets/form-behance.png";
+import dribble from "../assets/form-dribble.png";
 import {
   updateSocialLinks,
   addSocialLinks,
-  reset,
   deleteSocialLinks,
 } from "../slice/SocialLInksSlice";
 const SocialInfoForm = () => {
@@ -14,19 +18,20 @@ const SocialInfoForm = () => {
     "Website",
     "Linkedin",
     "Github",
-    "Twitter(X)",
     "Dribble",
     "Behance",
   ]);
+  const image = {
+    Website: website,
+    Github: github,
+    Linkedin: linkedin,
+    Behance: behance,
+    Dribble: dribble,
+  };
   const [localSocialLinks, setLocalSocialLinks] = useState([]);
 
   useEffect(() => {
     setLocalSocialLinks(SocialLinkData);
-    let newfilterLinks = links?.filter((data)=>{
-        return !SocialLinkData?.some((item) => data === item.name);
-    })
-    console.log(newfilterLinks);
-    setLinks(newfilterLinks)
   }, [SocialLinkData]);
 
   const handlechose = (item) => {
@@ -64,7 +69,11 @@ const SocialInfoForm = () => {
     // Handle invalid URL case (you can show an error message to the user if needed)
     console.error("Please enter a valid URL");
   };
+  const handleDeleteLink = (linkNameToDelete) => {
+    // Assuming setLinks is used to update the links state
 
+    setLinks((prevLinks) => [linkNameToDelete, ...prevLinks]);
+  };
   return (
     <div>
       <h2 className="text-lg">Links</h2>
@@ -85,7 +94,10 @@ const SocialInfoForm = () => {
               />
             </div>
             <button
-              onClick={() => dispatch(deleteSocialLinks(item.name))}
+              onClick={() => {
+                dispatch(deleteSocialLinks(item?.name));
+                handleDeleteLink(item?.name);
+              }}
               className="bg-red-500 text-white p-2 rounded-lg"
             >
               Delete
@@ -97,9 +109,9 @@ const SocialInfoForm = () => {
         {links?.map((item) => (
           <button
             onClick={() => handlechose(item)}
-            className="p-2 bg-blue-200  rounded-full"
+            className="p-2 bg-white  rounded-full"
           >
-            ➕ {item}
+            <img src={image[item]} alt="" />
           </button>
         ))}
       </div>

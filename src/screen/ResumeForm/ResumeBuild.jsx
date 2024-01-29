@@ -1,31 +1,29 @@
 import React from "react";
-
 import Template from "../../templates/novatemp-1/Template";
-
-import { useDispatch, useSelector } from "react-redux";
 import PersonalInfoForm from "../../component/PersonalInfoForm";
 import SideNav from "../../component/SideNav";
-
+import PersonalinfoCard from "../../component/PersonalinfoCard";
+import { useDispatch, useSelector } from "react-redux";
 const ResumeBuild = () => {
-  const dispatch = useDispatch();
-  const tempId = useSelector((state) => state?.templateID?.tempId);
+  const ActiveForm = useSelector((state) => state.showForm);
+  console.log(ActiveForm);
   return (
     <>
-      <div className="flex flex-wrap justify-evenly  bg-blue-600 min-h-screen">
+      <div className="flex flex-wrap justify-evenly items-start bg-[#F4F4F5] min-h-screen">
         <div>
           <SideNav />
         </div>
         <div>
-          <div className="flex justify-between gap-2 my-3 w-full p-3 rounded-md mt-3 bg-white">
-            <h2>JotCV</h2>
+          <div className="flex justify-between gap-2 my-3 w-full p-3 rounded-full mt-3 bg-blue-200">
+            <h2 className="font-semibold">Resume Name</h2>
 
-            <button className="bg-black text-white rounded-full px-2 py-0.5">
+            <button className="bg-blue-600 text-white rounded-full px-2 py-0.5">
               Download
             </button>
           </div>
-          <PersonalInfoForm />
+          {ActiveForm.PersonalInfoFormShow? <PersonalInfoForm /> : <PersonalinfoCard />}
         </div>
-        <div className="w-[45%] overflow-y-hidden h-[45rem] no-scrollbar scale-95 bg-white rounded-md">
+        <div className="w-[45%] overflow-y-hidden h-[42rem] no-scrollbar  bg-white border-[12px] border-[#F7F7F7] rounded-md">
           <Template />
         </div>
       </div>

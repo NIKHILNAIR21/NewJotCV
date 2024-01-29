@@ -1,8 +1,9 @@
 import React, { useState } from "react";
-import { ErrorMessage, Field, Form, Formik } from "formik";
+import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import * as Yup from "yup";
 import { useDispatch, useSelector } from "react-redux";
 import { updatePersonalInfo, updatePhoto } from "../slice/personalInfo.js";
+import { resetForm } from "../slice/showContentSlice.js";
 import NoImg from "../assets/NoImage.jpg";
 import Edit from "../assets/edit.png";
 import ReactQuill from "react-quill";
@@ -72,6 +73,7 @@ const PersonalInfoForm = () => {
           try {
             let response = await createSocialLinks(body);
             if (response?.data?.status == 201) {
+              dispatch(resetForm());
             }
           } catch (error) {}
         }
@@ -80,13 +82,13 @@ const PersonalInfoForm = () => {
   };
   return (
     <div>
-      <div className="bg-gray-200 w-full rounded-t-2xl pt-4 relative">
+      <div className="bg-white w-full flex items-center justify-evenly  rounded-t-2xl pt-4 relative">
         {initialValues?.photo ? (
-          <>
+          <div className="flex items-center justify-between gap-28">
             <img
               src={initialValues?.photo}
               alt="Preview"
-              className="w-28  h-28 mx-auto rounded-md"
+              className="w-28  h-28 mx-auto rounded-full"
             />
             <input
               type="file"
@@ -95,17 +97,15 @@ const PersonalInfoForm = () => {
               id="fileInput"
               className="absolute left-64 top-[40rem] z-[-100] pb-3 opacity-0 w-0 h-0 cursor-pointer"
             />
-            <label htmlFor="fileInput">
-              <img
-                className="absolute w-8  h-8 top-24 right-44 bg-blue-200 rounded-md"
-                src={Edit}
-                // onChange={handlePhotoChange}
-                alt=""
-              />
+            <label
+              htmlFor="fileInput"
+              className="p-2 border-dashed rounded-full border-2 border-blue-600"
+            >
+              Edit Profile Photo
             </label>
-          </>
+          </div>
         ) : (
-          <>
+          <div className="flex items-center justify-between gap-28">
             <img
               src={NoImg}
               alt="Preview"
@@ -118,21 +118,13 @@ const PersonalInfoForm = () => {
               id="fileInput"
               className="absolute left-64 top-[40rem] z-[-100] pb-3 opacity-0 w-0 h-0 cursor-pointer"
             />
-            <label htmlFor="fileInput">
-              <img
-                className="absolute w-8  h-8 top-24 right-44 bg-blue-200 rounded-md"
-                src={Edit}
-                // onChange={handlePhotoChange}
-                alt=""
-              />
+            <label
+              htmlFor="fileInput"
+              className="p-2 border-dashed border-blue-600 rounded-full border-2"
+            >
+              Add Profile Photo
             </label>
-            {/* <img
-              className="absolute w-8  h-8 top-24 right-44 bg-blue-200 rounded-md"
-              src={Edit}
-              onChange={handlePhotoChange}
-              alt=""
-            /> */}
-          </>
+          </div>
         )}
       </div>
       <Formik
@@ -144,15 +136,15 @@ const PersonalInfoForm = () => {
         }}
       >
         {({ values, setFieldValue }) => (
-          <Form className=" p-4  bg-gray-200 rounded-b-2xl">
-            <div className="overflow-y-auto h-96 no-scrollbar">
-              <div className="flex flex-col">
-                <label htmlFor="FullName">Full Name</label>
+          <Form>
+            <div className="overflow-y-auto p-4 rounded-b-2xl bg-white h-[26rem] no-scrollbar">
+              <div className="flex flex-col my-[12px]">
+                <label className="font-poppins text-[16px]">Full Name</label>
                 <Field
                   type="text"
                   name="FullName"
                   placeholder="John Doe"
-                  className="p-3 rounded-md"
+                  className="p-3  border outline-none rounded-[6px]"
                   value={values.FullName}
                   onChange={(e) => {
                     setFieldValue("FullName", e.target.value);
@@ -166,29 +158,27 @@ const PersonalInfoForm = () => {
                   className="error-message text-red-500"
                 />
               </div>
-              <div className="flex flex-col ">
-                <label htmlFor="FullName">Summary</label>
-                <ReactQuill
-                  theme="snow"
-                  max="10"
+              <div className="flex flex-col my-[12px]">
+                <label className="font-poppins text-[16px]">Summary</label>
+                <textarea
+                  maxLength={200}
                   value={values.summary}
                   name="summary"
                   onChange={(e) => {
-                    console.log(e);
-                    setFieldValue("summary", e);
-                    dispatch(updatePersonalInfo({ summary: e }));
+                    setFieldValue("summary", e.target.value);
+                    dispatch(updatePersonalInfo({ summary: e.target.value }));
                   }}
-                  className="bg-white rounded-md p-6"
+                  className="bg-white rounded-md outline-none border p-4"
                   style={{ width: "500px" }}
                 />
               </div>
-              <div className="flex flex-col">
-                <label htmlFor="FullName">profession</label>
+              <div className="flex flex-col my-[12px]">
+                <label className="font-poppins text-[16px]">profession</label>
                 <Field
                   type="text"
                   name="profession"
                   placeholder="Software Developer"
-                  className="p-3 rounded-md"
+                  className="p-3 rounded-md outline-none border"
                   value={values.profession}
                   onChange={(e) => {
                     setFieldValue("profession", e.target.value);
@@ -198,14 +188,14 @@ const PersonalInfoForm = () => {
                   }}
                 ></Field>
               </div>
-              <div className="flex justify-between gap-3">
-                <div className="flex flex-col">
-                  <label htmlFor="FullName">Email</label>
+              <div className="flex justify-between gap-3 ">
+                <div className="flex flex-col my-[12px]">
+                  <label className="font-poppins text-[16px]">Email</label>
                   <Field
                     type="email"
                     name="profession"
                     placeholder="johndeo@gmail.com"
-                    className="p-3 rounded-md"
+                    className="p-3 rounded-md outline-none border"
                     value={values.email}
                     onChange={(e) => {
                       setFieldValue("email", e.target.value);
@@ -213,14 +203,16 @@ const PersonalInfoForm = () => {
                     }}
                   ></Field>
                 </div>
-                <div className="flex flex-col">
-                  <label htmlFor="FullName">Mobile Number</label>
+                <div className="flex flex-col my-[12px]">
+                  <label className="font-poppins text-[16px]">
+                    Mobile Number
+                  </label>
                   <Field
                     type="tel"
                     name="Mobile Number"
                     maxLength={10}
                     placeholder="+91-222-222-33-21"
-                    className="p-3 rounded-md"
+                    className="p-3 rounded-md outline-none border"
                     value={values.phoneNumber}
                     onKeyPress={isNumberKey}
                     onChange={(e) => {
@@ -234,13 +226,13 @@ const PersonalInfoForm = () => {
                   ></Field>
                 </div>
               </div>
-              <div className="flex flex-col">
+              <div className="flex flex-col my-[12px]">
                 <label htmlFor="FullName">Address</label>
                 <Field
                   type="text"
                   name="Address"
                   placeholder="India, Mumbai"
-                  className="p-3 rounded-md"
+                  className="p-3 rounded-md outline-none border"
                   value={values.city}
                   onChange={(e) => {
                     setFieldValue("city", e.target.value);
@@ -248,18 +240,18 @@ const PersonalInfoForm = () => {
                   }}
                 ></Field>
               </div>
-              <div>
+              <div className="my-[12px]">
                 <SocialInfoForm />
               </div>
             </div>
             <div className="flex  justify-between mt-2">
-              <button className="bg-black rounded-full text-white px-2 py-1">
+              <button className="bg-black rounded-full text-[20px] text-white px-[20px] py-[10px] ">
                 Back
               </button>
               <button
-                onClick={() => handleSubmit(values)}
+                // onClick={() => handleSubmit(values)}
                 type="submit"
-                className="bg-blue-600 rounded-full text-white px-2 py-1"
+                className="bg-blue-600 text-[20px] rounded-full text-white px-[20px] py-[10px] "
               >
                 Save
               </button>

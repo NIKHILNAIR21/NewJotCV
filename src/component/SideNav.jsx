@@ -1,21 +1,29 @@
 import React, { useState } from "react";
 import newJotcv from "../assets/newjotcv.png";
+import add from "../assets/add.png";
+import change from "../assets/change.png";
 const SideNav = () => {
   const [showModal, setShowModal] = useState(false);
   return (
     <>
-      <div className="bg-white flex flex-col items-center my-3 p-3 gap-5  rounded-md">
-        <div>
-          <img className="" src={newJotcv} alt="" />
+      <div className="bg-blue-600 flex flex-col items-center my-3  gap-5  rounded-md">
+        <div className="bg-white w-full p-3 rounded-t-md">
+          <img className=" mx-auto" src={newJotcv} alt="" />
         </div>
         <button
           onClick={() => setShowModal(true)}
-          className="text-center p-2 rounded-md text-sm w-24 bg-blue-100"
+          className="text-center p-3 m-3 flex flex-col items-center gap-3 rounded-md text-sm w-24 bg-white"
         >
-          Add Content
+          <div>
+            <img src={add} alt="" />
+          </div>
+          <div className="text-[12px] text-[#404145]">Add Content</div>
         </button>
-        <button className="text-center p-2  rounded-md text-sm w-24 bg-blue-100">
-          Change Template
+        <button className="text-center m-3 p-3 flex flex-col items-center gap-3  rounded-md text-sm w-24 bg-white">
+          <div>
+            <img src={change} alt="" />
+          </div>
+          <div className="text-[12px] text-[#404145]">Change Template</div>
         </button>
       </div>
       {showModal && (

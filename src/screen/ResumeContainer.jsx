@@ -24,6 +24,7 @@ import { resetProject } from "../slice/projectSlice";
 import { resetSkil } from "../slice/skillSlice";
 import { resetSummary } from "../slice/summarySlice";
 import { resetResumeData } from "../slice/fullProfileSlice";
+import { resetSocial } from "../slice/SocialLInksSlice";
 import NoImg from "../assets/NoImage.jpg";
 import { saveTempId } from "../slice/templateIDSlice";
 
@@ -165,6 +166,7 @@ const ResumeContainer = () => {
     } else {
       navigate("/experience-level");
       dispatch(reset());
+      dispatch(resetSocial());
       dispatch(resetWork());
       dispatch(resetEdu());
       dispatch(resetProject());
@@ -311,218 +313,219 @@ const ResumeContainer = () => {
               {profiles?.map((item, index) => {
                 return (
                   <div>
-  <div
-                    className={
-                      selectedProfile == item?.id
-                        ? "w-[360px] h-full overflow-hidden relative shadow-2xl scale-100 transition-all duration-200 delay-75 mb-5 from-purple-500 via-pink-400 to-blue-500 border-2 rounded-lg border-green-500"
-                        : "w-[360px] h-full overflow-hidden relative shadow-md border scale-100 rounded-lg border-gray-300 mb-5"
-                    }
-                    key={index}
-                    onClick={() => handleSelectProfile(item?.id)}
-                  >
-                    {/* Add overlay */}
                     <div
-                      onClick={() => setShowDrop(!showDrop)}
-                      className="absolute top-1.5 z-50 right-1.5 p-0.5 bg-sky-300 opacity-80 rounded-full"
+                      className={
+                        selectedProfile == item?.id
+                          ? "w-[360px] h-full overflow-hidden relative shadow-2xl scale-100 transition-all duration-200 delay-75 mb-5 from-purple-500 via-pink-400 to-blue-500 border-2 rounded-lg border-green-500"
+                          : "w-[360px] h-full overflow-hidden relative shadow-md border scale-100 rounded-lg border-gray-300 mb-5"
+                      }
+                      key={index}
+                      onClick={() => handleSelectProfile(item?.id)}
                     >
-                      <img className="w-6" src={menu} alt="" />
-                    </div>
-                    {showDrop && selectedProfile === item?.id && (
+                      {/* Add overlay */}
                       <div
-                        className="absolute top-7 right-1 z-10  origin-top-right rounded-md  bg-gray-100 shadow-md   focus:outline-none"
-                        role="menu"
+                        onClick={() => setShowDrop(!showDrop)}
+                        className="absolute top-1.5 z-50 right-1.5 p-0.5 bg-sky-300 opacity-80 rounded-full"
                       >
-                        <div className="py-1" role="none">
-                          {/* Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" */}
-
-                          <ul>
-                            <li>
-                              <div
-                                className=" z-30 relative  "
-                                onClick={() => navigate("/web-portfolio")}
-                              >
-                                <span className=" p-2 rounded-lg font-medium  text-sky-700 cursor-pointer hover:scale-110 transition ease-out duration-150 delay-75">
-                                  Set Web Portfolio
-                                </span>
-                              </div>
-                            </li>
-                          </ul>
-                        </div>
+                        <img className="w-6" src={menu} alt="" />
                       </div>
-                    )}
-                    <div class="relative h-96 w-full p-0  bg-white">
-                      <div className="bg-black opacity-0 hover:opacity-70 absolute top-0 right-0 h-96 w-full flex items-center justify-center">
-                        <h1
-                          className="text-white opacity-100 text-xl border-2 p-2 rounded-lg cursor-pointer z-20"
-                          onClick={() => {
-                            openModal();
-                            dispatch(saveTempId(item?.template));
-                            dispatch(getFull(item?.id));
-                          }}
+                      {showDrop && selectedProfile === item?.id && (
+                        <div
+                          className="absolute top-7 right-1 z-10  origin-top-right rounded-md  bg-gray-100 shadow-md   focus:outline-none"
+                          role="menu"
                         >
-                          Preview
-                        </h1>
-                      </div>
-                      {selectedProfile == item?.id ? (
-                        <div className="absolute top-2 left-2">
-                          <img src={check}></img>
-                        </div>
-                      ) : (
-                        <div className="absolute top-2 left-2">
-                          <img className="w-5" src={select} alt="" />
+                          <div className="py-1" role="none">
+                            {/* Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" */}
+
+                            <ul>
+                              <li>
+                                <div
+                                  className=" z-30 relative  "
+                                  onClick={() => navigate("/web-portfolio")}
+                                >
+                                  <span className=" p-2 rounded-lg font-medium  text-sky-700 cursor-pointer hover:scale-110 transition ease-out duration-150 delay-75">
+                                    Set Web Portfolio
+                                  </span>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
                         </div>
                       )}
-                      <img
-                        className="mx-auto block overflow-hidden h-full w-full "
-                        src={
-                          item?.template
-                            ? getTemplateImage(item?.template)
-                            : NoImg
-                        }
-                        alt="Card"
-                      />
-                    </div>
-                    <div class="border-t border-gray-300 "></div>
-
-                    <div className="px-4 py-4 ">
-                      <div className="font-bold flex capitalize justify-between text-lg sm:text-xl  mb-2">
-                        {isEditing && selectedProfile === item?.id ? (
-                          <div className="flex justify-start items-center gap-5">
-                            <input
-                              type="text"
-                              value={editedName}
-                              onChange={(e) => setEditedName(e.target.value)}
-                              className="border w-32 "
-                            />{" "}
-                            <p
-                              onClick={() => handleEditName(item?.id)}
-                              className="cursor-pointer bg-green-500  text-white p-1 rounded-md text-sm flex items-center"
-                            >
-                              save
-                            </p>
+                      <div class="relative h-96 w-full p-0  bg-white">
+                        <div className="bg-black opacity-0 hover:opacity-70 absolute top-0 right-0 h-96 w-full flex items-center justify-center">
+                          <h1
+                            className="text-white opacity-100 text-xl border-2 p-2 rounded-lg cursor-pointer z-20"
+                            onClick={() => {
+                              openModal();
+                              dispatch(saveTempId(item?.template));
+                              dispatch(getFull(item?.id));
+                            }}
+                          >
+                            Preview
+                          </h1>
+                        </div>
+                        {selectedProfile == item?.id ? (
+                          <div className="absolute top-2 left-2">
+                            <img src={check}></img>
                           </div>
                         ) : (
-                          <div className="font-bold flex capitalize justify-between text-lg sm:text-xl  mb-2">
-                            {item?.profile_name === "Profile_1"
-                              ? `profile_${item?.id}`
-                              : item?.profile_name}
-                            {selectedProfile === item?.id && (
-                              <div>
-                                <p
-                                  onClick={() => setIsEditing(true)}
-                                  className="cursor-pointer text-blue-500 px-3 mt-1"
-                                >
-                                  <img
-                                    width={20}
-                                    height={20}
-                                    src={edit}
-                                    alt="edit button"
-                                  />
-                                </p>
-                              </div>
-                            )}
+                          <div className="absolute top-2 left-2">
+                            <img className="w-5" src={select} alt="" />
                           </div>
                         )}
-                        <Link onClick={(e) => handlesetPortfolio(e, item)}>
-                          <span className=" relative flex items-center w-fit border-2 hover:scale-105 transition-all delay-100 hover:text-white hover:bg-gradient-to-tr from-purple-500 via-pink-400 to-blue-500 rounded-r-full rounded-l-full px-2 text-xs py-1 cursor-pointer  capitalize">
-                            <br />
-                            <p className="text-sm px-1.5">
-                              {webLoading && selectedProfile == item?.id
-                                ? "Loading..."
-                                : "Web Portfolio"}
-                            </p>
-                          </span>
-                        </Link>
+                        <img
+                          className="mx-auto block overflow-hidden h-full w-full "
+                          src={
+                            item?.template
+                              ? getTemplateImage(item?.template)
+                              : NoImg
+                          }
+                          alt="Card"
+                        />
+                      </div>
+                      <div class="border-t border-gray-300 "></div>
 
-                        {/* <p className="text-gray-700 text-sm sm:text-base">
+                      <div className="px-4 py-4 ">
+                        <div className="font-bold flex capitalize justify-between text-lg sm:text-xl  mb-2">
+                          {isEditing && selectedProfile === item?.id ? (
+                            <div className="flex justify-start items-center gap-5">
+                              <input
+                                type="text"
+                                value={editedName}
+                                onChange={(e) => setEditedName(e.target.value)}
+                                className="border w-32 "
+                              />{" "}
+                              <p
+                                onClick={() => handleEditName(item?.id)}
+                                className="cursor-pointer bg-green-500  text-white p-1 rounded-md text-sm flex items-center"
+                              >
+                                save
+                              </p>
+                            </div>
+                          ) : (
+                            <div className="font-bold flex capitalize justify-between text-lg sm:text-xl  mb-2">
+                              {item?.profile_name === "Profile_1"
+                                ? `profile_${item?.id}`
+                                : item?.profile_name}
+                              {selectedProfile === item?.id && (
+                                <div>
+                                  <p
+                                    onClick={() => setIsEditing(true)}
+                                    className="cursor-pointer text-blue-500 px-3 mt-1"
+                                  >
+                                    <img
+                                      width={20}
+                                      height={20}
+                                      src={edit}
+                                      alt="edit button"
+                                    />
+                                  </p>
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          <Link onClick={(e) => handlesetPortfolio(e, item)}>
+                            <span className=" relative flex items-center w-fit border-2 hover:scale-105 transition-all delay-100 hover:text-white hover:bg-gradient-to-tr from-purple-500 via-pink-400 to-blue-500 rounded-r-full rounded-l-full px-2 text-xs py-1 cursor-pointer  capitalize">
+                              <br />
+                              <p className="text-sm px-1.5">
+                                {webLoading && selectedProfile == item?.id
+                                  ? "Loading..."
+                                  : "Web Portfolio"}
+                              </p>
+                            </span>
+                          </Link>
+
+                          {/* <p className="text-gray-700 text-sm sm:text-base">
                           {item?.position}
                         </p> */}
-                      </div>
-                      <div className="mt-2">
-                        <div className=" flex items-center justify-between relative pt-1">
-                          <div>
-                            <span className="text-xs font-semibold inline-block  uppercase rounded-full text-blue-600 ">
-                              Profile Complete
-                            </span>
-                          </div>
-                          <div className="bg-gray-200 w-[100px] rounded-r-full rounded-l-full relative -z-10">
-                            <div
-                              style={{ width: `${item?.profile_percentage}px` }}
-                              className="shadow-none rounded-l-full relative z-20 rounded-r-full flex flex-col text-center whitespace-nowrap text-white justify-center h-2.5 bg-blue-500"
-                            />
-                          </div>
+                        </div>
+                        <div className="mt-2">
+                          <div className=" flex items-center justify-between relative pt-1">
+                            <div>
+                              <span className="text-xs font-semibold inline-block  uppercase rounded-full text-blue-600 ">
+                                Profile Complete
+                              </span>
+                            </div>
+                            <div className="bg-gray-200 w-[100px] rounded-r-full rounded-l-full relative -z-10">
+                              <div
+                                style={{
+                                  width: `${item?.profile_percentage}px`,
+                                }}
+                                className="shadow-none rounded-l-full relative z-20 rounded-r-full flex flex-col text-center whitespace-nowrap text-white justify-center h-2.5 bg-blue-500"
+                              />
+                            </div>
 
-                          <div className="">
-                            <span className="text-xs font-semibold inline-block text-blue-600">
-                              {item?.profile_percentage}%
-                            </span>
+                            <div className="">
+                              <span className="text-xs font-semibold inline-block text-blue-600">
+                                {item?.profile_percentage}%
+                              </span>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                    <div class=" "></div>
-                    <div class="thumbnail-links relative whitespace-nowrap text-center text-black font-semibold uppercase flex justify-between h-12 w-full items-center">
-                      <div className="flex mx-3 justify-evenly gap-3">
-                        <span
-                          className=" relative flex items-center hover:bg-blue-500 transition-all hover:scale-125  delay-100  hover:text-white justify-center border-2 rounded-r-full rounded-l-full px-2  w-full py-1 cursor-pointer  capitalize"
-                          onClick={() => {
-                            navigate(`/preview?profile=${item?.id}`);
-                            dispatch(saveTempId(item?.template));
-                            dispatch(getFull(item?.id));
-                          }}
-                        >
-                          <i
-                            className="fa fa-pencil-square-o"
-                            aria-hidden="true"
-                          ></i>
-                          <br />
-                          <p className="text-sm px-1.5 ">Edit</p>
-                        </span>
-                        <span
-                          className=" relative flex items-center w-full hover:bg-red-500 transition-opacity hover:text-white hover:scale-125  delay-100  border-2 rounded-r-full rounded-l-full px-2 text-xs py-1 cursor-pointer  capitalize"
-                          onClick={() => handleDelete(item?.id)}
-                        >
-                          <i className="fa fa-trash-o" aria-hidden="true"></i>
-                          <br />
-                          <p className="text-sm px-1.5">Delete</p>
-                        </span>
+                      <div class=" "></div>
+                      <div class="thumbnail-links relative whitespace-nowrap text-center text-black font-semibold uppercase flex justify-between h-12 w-full items-center">
+                        <div className="flex mx-3 justify-evenly gap-3">
+                          <span
+                            className=" relative flex items-center hover:bg-blue-500 transition-all hover:scale-125  delay-100  hover:text-white justify-center border-2 rounded-r-full rounded-l-full px-2  w-full py-1 cursor-pointer  capitalize"
+                            onClick={() => {
+                              navigate(`/preview?profile=${item?.id}`);
+                              dispatch(saveTempId(item?.template));
+                              dispatch(getFull(item?.id));
+                            }}
+                          >
+                            <i
+                              className="fa fa-pencil-square-o"
+                              aria-hidden="true"
+                            ></i>
+                            <br />
+                            <p className="text-sm px-1.5 ">Edit</p>
+                          </span>
+                          <span
+                            className=" relative flex items-center w-full hover:bg-red-500 transition-opacity hover:text-white hover:scale-125  delay-100  border-2 rounded-r-full rounded-l-full px-2 text-xs py-1 cursor-pointer  capitalize"
+                            onClick={() => handleDelete(item?.id)}
+                          >
+                            <i className="fa fa-trash-o" aria-hidden="true"></i>
+                            <br />
+                            <p className="text-sm px-1.5">Delete</p>
+                          </span>
+                        </div>
+                        {downloadInProgress ? (
+                          <span
+                            className="relative flex  justify-end items-center border-2 rounded-r-full rounded-l-full w-fit text-blue-500   mx-2  px-2  cursor-pointer text-lg capitalize"
+                            //   onClick={() =>
+                            // navigate(`/web-portfolio?profile=${item?.id}`)
+                            //   }
+                          >
+                            {/* <i className="fa fa-briefcase" aria-hidden="true"></i> */}
+                            <br />
+                            <p className="text-sm font-semibold px-1.5">
+                              Download
+                            </p>
+                          </span>
+                        ) : (
+                          <span
+                            className="relative flex  justify-end items-center border-2 rounded-r-full rounded-l-full w-fit text-blue-500 hover:text-white hover:bg-blue-700 hover:scale-110 transition-all delay-75 mx-2  px-2  cursor-pointer text-lg capitalize"
+                            //   onClick={() =>
+                            // navigate(`/web-portfolio?profile=${item?.id}`)
+                            //   }
+                            onClick={() =>
+                              subs != null
+                                ? getAllProfiles(item?.id)
+                                : navigate("/pricing-plans")
+                            }
+                          >
+                            {/* <i className="fa fa-briefcase" aria-hidden="true"></i> */}
+                            <br />
+                            <p className="text-sm font-semibold px-1.5">
+                              Download
+                            </p>
+                          </span>
+                        )}
                       </div>
-                      {downloadInProgress ? (
-                        <span
-                          className="relative flex  justify-end items-center border-2 rounded-r-full rounded-l-full w-fit text-blue-500   mx-2  px-2  cursor-pointer text-lg capitalize"
-                          //   onClick={() =>
-                          // navigate(`/web-portfolio?profile=${item?.id}`)
-                          //   }
-                        >
-                          {/* <i className="fa fa-briefcase" aria-hidden="true"></i> */}
-                          <br />
-                          <p className="text-sm font-semibold px-1.5">
-                            Download
-                          </p>
-                        </span>
-                      ) : (
-                        <span
-                          className="relative flex  justify-end items-center border-2 rounded-r-full rounded-l-full w-fit text-blue-500 hover:text-white hover:bg-blue-700 hover:scale-110 transition-all delay-75 mx-2  px-2  cursor-pointer text-lg capitalize"
-                          //   onClick={() =>
-                          // navigate(`/web-portfolio?profile=${item?.id}`)
-                          //   }
-                          onClick={() =>
-                            subs != null
-                              ? getAllProfiles(item?.id)
-                              : navigate("/pricing-plans")
-                          }
-                        >
-                          {/* <i className="fa fa-briefcase" aria-hidden="true"></i> */}
-                          <br />
-                          <p className="text-sm font-semibold px-1.5">
-                            Download
-                          </p>
-                        </span>
-                      )}
                     </div>
                   </div>
-                  </div>
-                
                 );
               })}
             </div>

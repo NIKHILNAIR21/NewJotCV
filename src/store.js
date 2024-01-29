@@ -6,6 +6,7 @@ import summaryReducer from "./slice/summarySlice";
 import skillReducer from "./slice/skillSlice";
 import SocialLinksSlice from "./slice/SocialLInksSlice";
 import userDetailReducer from "./slice/userDetail";
+import  showFormReducer  from "./slice/showContentSlice";
 // import { getDefaultMiddleware } from "@reduxjs/toolkit";
 import storage from "redux-persist/lib/storage";
 import { combineReducers } from "@reduxjs/toolkit";
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   workExperience: workExperienceReducer,
   skills: skillReducer,
   summary: summaryReducer,
+  showForm: showFormReducer,
   // userDetails
   userDetail: userDetailReducer,
   project: projectSlice,

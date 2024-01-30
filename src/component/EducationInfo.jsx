@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { Formik, Field, Form, ErrorMessage } from "formik";
@@ -7,6 +7,7 @@ import {
   updateFormData,
   toggleCurrentlyStudying,
   resetEdu,
+  getEducationInfoApi,
 } from "../slice/educationSlice";
 import { resetForm } from "../slice/showContentSlice";
 import {
@@ -15,6 +16,7 @@ import {
   upDateEduById,
 } from "../services/ApiServices";
 import { getFull } from "../actions/allProfieAction";
+import showNotification from "../services/NotificationService";
 const EducationSchema = Yup.object().shape({
   schoolName: Yup.string()
     .min(3, "Minimum 3 Character")
@@ -35,6 +37,7 @@ const EducationSchema = Yup.object().shape({
 
 const EducationInfo = () => {
   const location = useLocation();
+  const navigate=useNavigate()
   let resumeData = useSelector((state) => state?.fullProfile?.resumeData?.data);
   let eduid = new URLSearchParams(location.search).get("edu");
   const dispatch = useDispatch();
@@ -43,6 +46,42 @@ const EducationInfo = () => {
   );
   const formValue = useSelector((state) => state.education.formData);
   const intialValues = { ...formValue, currentlyStudying: educationState };
+
+  useEffect(() => {
+    getEducationProfile();
+  }, [eduid]);
+
+  const getEducationProfile = async () => {
+    if (eduid !== null) {
+      let response = await getSingleEduById(eduid);
+      if (response?.data?.status == 200) {
+        const {
+          course,
+          university,
+          start_date,
+          end_date,
+          description,
+          is_current,
+        } = response?.data?.data;
+        dispatch(
+          getEducationInfoApi({
+            isEdit:true,
+            currentlyStudying: is_current,
+            showDescriptionInput: false,
+            formData: {
+              schoolName: university,
+              schoolLocation: "",
+              degree: course,
+              fieldOfStudy: "",
+              startDate: start_date,
+              endDate: is_current ? "" : end_date,
+              description: description,
+            },
+          })
+        );
+      }
+    }
+  };
 
   const handleSubmit = async (values) => {
     let body = {
@@ -58,10 +97,13 @@ const EducationInfo = () => {
     try {
       if (eduid) {
         let response = await upDateEduById(eduid, body);
-        if (response?.data?.status == 200) {
+        if (response?.status == 200) {
           showNotification("success", "Education updated successfully");
-          //   navigate(`/education-history?profile=${id}&preview`);
+          dispatch(getFull(resumeData?.id));
+          dispatch(resetForm());
+
           dispatch(resetEdu());
+          navigate("/resume-build")
         }
       } else {
         let response = await createEducationProfile(body);
@@ -196,7 +238,7 @@ const EducationInfo = () => {
 
             <div className="flex  justify-end mt-2">
               <button
-                onClick={() => dispatch(resetForm())}
+                onClick={() => {dispatch(resetForm());navigate("/resume-build")}}
                 type="submit"
                 className="bg-blue-600 text-[20px] rounded-full text-white px-[20px] py-[10px] "
               >

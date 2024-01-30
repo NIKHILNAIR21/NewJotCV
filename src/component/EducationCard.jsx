@@ -9,6 +9,7 @@ import {
   AccordionBody,
 } from "@material-tailwind/react";
 import { getFull } from "../actions/allProfieAction";
+import { useNavigate } from "react-router";
 
 function Icon({ id, open }) {
   return (
@@ -32,6 +33,7 @@ function Icon({ id, open }) {
 }
 const EducationCard = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const resumeData = useSelector(
     (state) => state?.fullProfile?.resumeData?.data
@@ -45,11 +47,14 @@ const EducationCard = () => {
       if (resp?.data?.status == 200) {
         showNotification("success", "Education deleted successfully");
         dispatch(getFull(resumeData?.id));
-        
       }
     } catch (error) {
       console.log(error);
     }
+  };
+  const handleNavigate = (id) => {
+    navigate(`/resume-build?edu=${id}`);
+    dispatch(setActiveForm("EducationInfoFormShow"));
   };
   return (
     <div>
@@ -65,7 +70,10 @@ const EducationCard = () => {
           {resumeData?.eductaions &&
             resumeData?.eductaions.length != 0 &&
             resumeData?.eductaions?.map((item) => (
-              <div className="flex my-2.5 justify-between items-center  hover:bg-blue-600 p-1.5 hover:text-white transition-all delay-100 rounded-[6px] cursor-pointer">
+              <div
+                className="flex my-2.5 justify-between items-center  hover:bg-blue-600 p-1.5 hover:text-white transition-all delay-100 rounded-[6px] cursor-pointer"
+                onClick={() => handleNavigate(item?.id)}
+              >
                 <div className="">
                   <h3 className="text-[16px]    rounded-md font-medium ">
                     {item?.university}

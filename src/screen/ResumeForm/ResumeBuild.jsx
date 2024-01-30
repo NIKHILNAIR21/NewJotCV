@@ -15,6 +15,9 @@ const ResumeBuild = () => {
   const resumeData = useSelector(
     (state) => state?.fullProfile?.resumeData?.data
   );
+  const showSection = useSelector(
+    (state) => state?.showSectios
+  );
   return (
     <>
       <div className="flex flex-wrap justify-evenly items-start bg-[#F4F4F5] min-h-screen">
@@ -30,17 +33,23 @@ const ResumeBuild = () => {
             </button>
           </div>
 
-          {!ActiveForm.activeForm ? (
-            <>
-              <PersonalinfoCard />
-              <SkillinfoCard />
-              <EducationCard />
-            </>
+          {!resumeData && !ActiveForm.activeForm ? (
+            <PersonalInfoForm />
           ) : (
             <>
-              {ActiveForm.PersonalInfoFormShow && <PersonalInfoForm />}
-              {ActiveForm.SkillInfoFormShow && <Skillinfo />}
-              {ActiveForm.EducationInfoFormShow && <EducationInfo />}
+              {!ActiveForm.activeForm ? (
+                <>
+                  <PersonalinfoCard />
+                 {showSection?.Skills &&  <SkillinfoCard />}
+                 {showSection?.Education && <EducationCard />} 
+                </>
+              ) : (
+                <>
+                  {ActiveForm.PersonalInfoFormShow && <PersonalInfoForm />}
+                  {ActiveForm.SkillInfoFormShow && <Skillinfo />}
+                  {ActiveForm.EducationInfoFormShow && <EducationInfo />}
+                </>
+              )}
             </>
           )}
         </div>

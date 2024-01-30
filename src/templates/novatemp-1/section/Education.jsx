@@ -17,7 +17,8 @@ const Education = ({ edu, reduxEdu }) => {
         Education
       </h1>
       <div className="flex ">
-        <div className="mt-2 rounded ">
+        {
+          !reduxEdu?.isEdit &&  <div className="mt-2 rounded ">
           <h3 className="text-[15.7px] font-medium">
             {reduxEdu?.formData?.schoolName}
           </h3>
@@ -33,6 +34,8 @@ const Education = ({ edu, reduxEdu }) => {
             </p>
           )}
         </div>
+        }
+       
         {edu?.map((edu, index) => (
           <div key={edu?.id} className="mt-2 rounded ml-6">
             <div></div>

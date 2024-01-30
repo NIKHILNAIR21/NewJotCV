@@ -2,9 +2,20 @@ import React, { useState } from "react";
 import newJotcv from "../assets/newjotcv.png";
 import add from "../assets/add.png";
 import change from "../assets/change.png";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { setSectionActive } from "../slice/sectionSlice";
 const SideNav = () => {
   const [showModal, setShowModal] = useState(false);
+  const dispatch=useDispatch()
+  const sectionArray = [
+    { name: 'Education', description: 'Description for Education' },
+    { name: 'Professional', description: 'Description for Professional' },
+    { name: 'Language', description: 'Description for Language' },
+    { name: 'Certificate', description: 'Description for Certificate' },
+    { name: 'Interest', description: 'Description for Interest' },
+    { name: 'Skills', description: 'Description for Skills' },
+    { name: 'Projects', description: 'Description for Projects' },
+  ];
   const resumeData = useSelector(
     (state) => state?.fullProfile?.resumeData?.data
   );
@@ -47,15 +58,15 @@ const SideNav = () => {
           </div>
           <h2 className="text-xl">Add Content</h2>
           <div className="flex flex-wrap w-full p-2 gap-4">
-            <p className="p-2 bg-gray-100 text-xl rounded-md">Education</p>
-            <p className="p-2 bg-gray-100 text-xl rounded-md">
-              Professional Experience
-            </p>
-            <p className="p-2 bg-gray-100 text-xl rounded-md">Certificate</p>
-            <p className="p-2 bg-gray-100 text-xl rounded-md">Interest</p>
-            <p className="p-2 bg-gray-100 text-xl rounded-md">Project</p>
-            <p className="p-2 bg-gray-100 text-xl rounded-md">Skill</p>
-            <p className="p-2 bg-gray-100 text-xl rounded-md"> Language</p>
+            {
+              sectionArray?.map((item,index)=>{
+                return(
+                  <p className="p-2 bg-gray-100 text-xl rounded-md cursor-pointer" key={index} onClick={()=>dispatch(setSectionActive(item?.name))}>{item?.name}</p>
+
+                )
+              })
+            }
+           
           </div>
         </div>
       )}

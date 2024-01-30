@@ -24,6 +24,7 @@ import PickedSlice from "./slice/PickedSlice";
 import selectedProfileSlice from "./slice/selectedProfileSlice";
 import portfolioProfile from "./slice/portfolioProfile";
 import askExpSlice from "./slice/askExpSlice";
+import sectionSlice from "./slice/sectionSlice";
 const rootReducer = combineReducers({
   personalInfo: personalInfoReducer,
   education: educationReducer,
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
   selectedProfile: selectedProfileSlice,
   askExp: askExpSlice,
   portfolioSelction: portfolioProfile,
+  showSectios:sectionSlice
 });
 
 const persistConfig = {

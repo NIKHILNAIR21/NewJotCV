@@ -17,8 +17,8 @@ const Template = () => {
   const SocialLinkData = useSelector((state) => state.socialLinks?.social);
   const SkillInfoData = useSelector((state) => state.skills?.skills);
   const EducationInfo = useSelector((state) => state?.education);
-  console.log(EducationInfo);
-  console.log(SocialLinkData);
+  const showSection = useSelector((state) => state?.showSectios);
+
   const formatDate = (dateString, formatType) => {
     if (!dateString) return null;
 
@@ -44,38 +44,49 @@ const Template = () => {
         phoneNo={resumeData?.mobile_no || PersonalInfoData?.phoneNumber}
         socialLinks={resumeData?.social_links || SocialLinkData}
       />
-      <Skill skills={SkillInfoData} apiSkills={resumeData?.skills} />
-      <WorkExp experince={resumeData?.experiences} />
+      {showSection?.Skills && (
+        <Skill skills={SkillInfoData} apiSkills={resumeData?.skills} />
+      )}
+      {showSection?.Professional && (
+        <WorkExp experince={resumeData?.experiences} />
+      )}
       {/* Project */}
-      <div className="px-6">
-        <h1 className="font-semibold uppercase text-base mt-1.5 text-emerald-500 ">
-          Projects
-        </h1>
-        <div>
-          {resumeData?.projects?.map((exp, index) => (
-            <div key={exp?.id} className="mt-2 text-justify">
-              <h3 className="text-sm  text-black font-semibold">
-                {exp?.title}
-              </h3>
-              <div className="flex justify-between">
-                <a href={exp?.link} className="text-sm underline text-black">
-                  Project Link
-                </a>
-                <p className="text-sm text-black">
-                  {formatDate(exp?.start_date)} - {formatDate(exp?.end_date)}
+      {showSection?.Projects && (
+        <div className="px-6">
+          <h1 className="font-semibold uppercase text-base mt-1.5 text-emerald-500 ">
+            Projects
+          </h1>
+          <div>
+            {resumeData?.projects?.map((exp, index) => (
+              <div key={exp?.id} className="mt-2 text-justify">
+                <h3 className="text-sm  text-black font-semibold">
+                  {exp?.title}
+                </h3>
+                <div className="flex justify-between">
+                  <a href={exp?.link} className="text-sm underline text-black">
+                    Project Link
+                  </a>
+                  <p className="text-sm text-black">
+                    {formatDate(exp?.start_date)} - {formatDate(exp?.end_date)}
+                  </p>
+                </div>
+                <p className="text-xs text-black font-medium">
+                  {exp?.description}
                 </p>
               </div>
-              <p className="text-xs text-black font-medium">
-                {exp?.description}
-              </p>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-      <Education edu={resumeData?.eductaions} reduxEdu={EducationInfo} />
-      <Language languages={resumeData?.languages} />
-      <Certificate certificate={resumeData?.certification} />
-      <Interest interest={resumeData?.interests} />
+      )}
+
+      {showSection?.Education && (
+        <Education edu={resumeData?.eductaions} reduxEdu={EducationInfo} />
+      )}
+      {showSection?.Language && <Language languages={resumeData?.languages} />}
+      {showSection?.Certificate && (
+        <Certificate certificate={resumeData?.certification} />
+      )}
+      {showSection?.Interest && <Interest interest={resumeData?.interests} />}
       {/* <VideoProfile videoAns={resumeData?.video_questions}/> */}
     </div>
   );

@@ -5,10 +5,9 @@ import { useDispatch, useSelector } from "react-redux";
 import { updatePersonalInfo, updatePhoto } from "../slice/personalInfo.js";
 import { resetForm } from "../slice/showContentSlice.js";
 import NoImg from "../assets/NoImage.jpg";
-import Edit from "../assets/edit.png";
-import ReactQuill from "react-quill";
+
 import { isNumberKey } from "../constant.js";
-import "react-quill/dist/quill.snow.css";
+
 import {
   updateCVProfile,
   createCVProfile,
@@ -30,6 +29,9 @@ const PersonalInfoSchema = Yup.object().shape({
 const PersonalInfoForm = () => {
   const [selectedPic, setSelectedPic] = useState(null);
   const dispatch = useDispatch();
+  const resumeData = useSelector(
+    (state) => state?.fullProfile?.resumeData?.data
+  );
   const initialValues = useSelector((state) => state.personalInfo);
   const socialLinks = useSelector((state) => state.socialLinks?.social);
   //   image upload
@@ -55,14 +57,15 @@ const PersonalInfoForm = () => {
       selectedPic !== null && formData.append("profile_picture", selectedPic);
     }
     try {
-      if (false) {
-        let response = await updateCVProfile(id, formData);
+      if (resumeData?.id) {
+        let response = await updateCVProfile(resumeData?.id, formData);
         if (response?.status == 200) {
+          dispatch(resetForm());
+          dispatch(getFull(resumeData?.id));
         }
       } else {
         let response = await createCVProfile(formData);
         if (response?.status == 201) {
-
           let body = {
             profile: response?.data?.data?.id,
             total_links: socialLinks.length,
@@ -76,20 +79,21 @@ const PersonalInfoForm = () => {
             let Skilresponse = await createSocialLinks(body);
             if (Skilresponse?.data?.status == 201) {
               dispatch(resetForm());
-              dispatch(getFull(response?.data?.data?.id))
+              dispatch(getFull(response?.data?.data?.id));
             }
           } catch (error) {}
         }
       }
     } catch (error) {}
   };
+  const photo = initialValues?.photo;
   return (
     <div>
       <div className="bg-white w-full flex items-center justify-evenly  rounded-t-2xl pt-4 relative">
         {initialValues?.photo ? (
           <div className="flex items-center justify-between gap-28">
             <img
-              src={initialValues?.photo}
+              src={photo}
               alt="Preview"
               className="w-28  h-28 mx-auto rounded-full"
             />
@@ -140,7 +144,7 @@ const PersonalInfoForm = () => {
       >
         {({ values, setFieldValue }) => (
           <Form>
-            <div className=" p-4 rounded-b-2xl bg-white h-[26rem] ">
+            <div className=" p-4 rounded-b-2xl overflow-y-auto no-scrollbar bg-white h-[26rem] ">
               <div className="flex flex-col my-[12px]">
                 <label className="font-poppins text-[16px]">Full Name</label>
                 <Field

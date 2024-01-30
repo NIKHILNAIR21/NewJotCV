@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  activeForm: false,
   PersonalInfoFormShow: false,
   EducationInfoFormShow: false,
   SkillInfoFormShow: false,
@@ -23,6 +24,7 @@ const showFormSlice = createSlice({
           state[key] = false;
         } else {
           state[key] = true;
+          state.activeForm = true;
         }
       });
     },

@@ -15,6 +15,9 @@ const Template = () => {
   );
   const PersonalInfoData = useSelector((state) => state.personalInfo);
   const SocialLinkData = useSelector((state) => state.socialLinks?.social);
+  const SkillInfoData = useSelector((state) => state.skills?.skills);
+  const EducationInfo = useSelector((state) => state?.education);
+  console.log(EducationInfo);
   console.log(SocialLinkData);
   const formatDate = (dateString, formatType) => {
     if (!dateString) return null;
@@ -41,7 +44,7 @@ const Template = () => {
         phoneNo={resumeData?.mobile_no || PersonalInfoData?.phoneNumber}
         socialLinks={resumeData?.social_links || SocialLinkData}
       />
-      <Skill skills={resumeData?.skills} />
+      <Skill skills={SkillInfoData} apiSkills={resumeData?.skills} />
       <WorkExp experince={resumeData?.experiences} />
       {/* Project */}
       <div className="px-6">
@@ -69,7 +72,7 @@ const Template = () => {
           ))}
         </div>
       </div>
-      <Education edu={resumeData?.eductaions} />
+      <Education edu={resumeData?.eductaions} reduxEdu={EducationInfo} />
       <Language languages={resumeData?.languages} />
       <Certificate certificate={resumeData?.certification} />
       <Interest interest={resumeData?.interests} />

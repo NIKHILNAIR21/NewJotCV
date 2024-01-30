@@ -225,7 +225,7 @@ const Skill = () => {
               </div>
 
               <button
-                type="submit]"
+                type="submit"
                 className=" bg-sky-500 text-white text-[17px] font-medium text-center flex justify-center mx-auto rounded-[5px] p-2 mb-10 mt-6"
               >
                 +Add Skill
